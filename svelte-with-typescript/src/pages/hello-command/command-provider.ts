@@ -1,6 +1,5 @@
 import {
     Light,
-    RedLight,
     LightOnCommand,
     LightOffCommand, 
     RedLightIncrease, 
@@ -11,37 +10,26 @@ import {
 
 let remote
 let light
-let lightOnCommand
-let lightOffCommand
-let redLight
 
 
 remote = new RemoteControl();
-
 light = new Light();
-lightOnCommand = new LightOnCommand(light);
-lightOffCommand = new LightOffCommand(light);
-
-redLight = new RedLight();
-let redLightOn = false;
 
 export function controlLight(bulb: string){
     if(bulb === 'on'){
-        remote.setCommand(lightOnCommand);
+        remote.setCommand(new LightOnCommand(light));
     }
     if(bulb === 'off'){
-        remote.setCommand(lightOffCommand);
-        redLightOn = false;
+        remote.setCommand(new LightOffCommand(light));
     }
-    if(bulb === 'increaseLum' && redLightOn){
-        remote.setCommand(new RedLightIncrease(redLight));
+    if(bulb === 'increaseLum'){
+        remote.setCommand(new RedLightIncrease(light));
     }
-    if(bulb === 'decreaseLum' && redLightOn){
-        remote.setCommand(new RedLightDecrease(redLight));
+    if(bulb === 'decreaseLum'){
+        remote.setCommand(new RedLightDecrease(light));
     }
     if(bulb === 'redLight'){
-        remote.setCommand(new RedLightOn(redLight));
-        redLightOn=true
+        remote.setCommand(new RedLightOn(light));
     }
     return remote.buttonWasPressed()
 }

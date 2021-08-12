@@ -1,10 +1,55 @@
 //Vendor class
 export class Light {
+    public HIGH:number = 3;
+    public MEDIUM:number = 2;
+    public LOW:number = 1;
+    public VERYLOW:number = 0;
+
+
+    isRedLightOn:boolean;
+    isLightOn:boolean;
+    luminosity:number;
+
+    constructor(){
+        this.luminosity = this.VERYLOW
+        this.isRedLightOn = false
+        this.isLightOn = false
+    }
+
     public on(){
-        return "on"
+        this.isLightOn = true;
+        return "on";
     }
     public off(){
+        this.isLightOn = false;
+        this.isRedLightOn = false;
         return "off"
+    }
+    public redZero(){
+        this.luminosity=this.VERYLOW;
+        return 'red0';
+    }
+    public redOne(){
+        this.luminosity=this.LOW;
+        this.isRedLightOn = true;
+        return "red1"
+    }
+    public redTwo(){
+        this.luminosity=this.MEDIUM;
+        return "red2"
+    }
+    public redThree(){
+        this.luminosity=this.HIGH;
+        return "red3"
+    }
+    public  getLuminosity(){
+        return this.luminosity;
+    }
+    public getRedLightStatus(){
+        return this.isRedLightOn;
+    }
+    public getLightOnStatus(){
+        return this.isLightOn;
     }
 }
 
@@ -28,102 +73,92 @@ export class LightOffCommand implements Command {
     }
 }
 
-export class RedLight {
-    public HIGH:number = 3;
-    public MEDIUM:number = 2;
-    public LOW:number = 1;
-    public VERYLOW:number = 0;
-    luminosity:number;
-
-    constructor(){
-        this.luminosity = this.VERYLOW
-    }
-
-    public redZero(){
-        this.luminosity=this.VERYLOW;
-        return 'red0';
-    }
-    public redOne(){
-        this.luminosity=this.LOW;
-        return "red1"
-    }
-    public redTwo(){
-        this.luminosity=this.MEDIUM;
-        return "red2"
-    }
-    public redThree(){
-        this.luminosity=this.HIGH;
-        return "red3"
-    }
-
-    public  getLuminosity(){
-        return this.luminosity;
-    }
-}
 
 export interface Command {
     execute():string
 }
 
 export class RedLightIncrease implements Command {
-    light:RedLight;
+    light:Light;
     prevLuminosity:number;
-    constructor(light:RedLight) {
+    isRedLightOn:boolean;
+    isLightOn:boolean;
+    constructor(light:Light) {
         this.light = light;
         this.prevLuminosity=light.getLuminosity();
+        this.isRedLightOn=light.getRedLightStatus();
+        this.isLightOn=light.getLightOnStatus();
     }
     execute():string{
-        console.log(this.prevLuminosity)
-        if(this.prevLuminosity === this.light.HIGH){
+        if(!this.isLightOn){
+            return this.light.off()
+        }
+        else if(!this.isRedLightOn){
+            return this.light.on();
+        }
+        else if(this.prevLuminosity === this.light.HIGH){
            return this.light.redThree()
         }
-        if(this.prevLuminosity === this.light.MEDIUM){
+        else if(this.prevLuminosity === this.light.MEDIUM){
            return this.light.redThree();
         }
-        if(this.prevLuminosity === this.light.LOW){
+        else if(this.prevLuminosity === this.light.LOW){
            return this.light.redTwo();
         }
-        if(this.prevLuminosity === this.light.VERYLOW){
+        else if(this.prevLuminosity === this.light.VERYLOW){
            return this.light.redOne();
         }
     }
 }
 
 export class RedLightDecrease implements Command {
-    light:RedLight;
+    light:Light;
     prevLuminosity:number;
-    constructor(light:RedLight) {
+    isRedLightOn:boolean;
+    isLightOn:boolean;
+    constructor(light:Light) {
         this.light = light;
         this.prevLuminosity=light.getLuminosity();
+        this.isRedLightOn=light.getRedLightStatus();
+        this.isLightOn=light.getLightOnStatus();
     }
     execute():string{
-        
-
-        if(this.prevLuminosity === this.light.HIGH){
+        if(!this.isLightOn){
+            return this.light.off()
+        }
+        else if(!this.isRedLightOn){
+            return this.light.on();
+        }
+        else if(this.prevLuminosity === this.light.HIGH){
            return this.light.redTwo()
         }
-        if(this.prevLuminosity === this.light.MEDIUM){
+        else if(this.prevLuminosity === this.light.MEDIUM){
            return this.light.redOne();
         }
-        if(this.prevLuminosity === this.light.LOW){
+        else if(this.prevLuminosity === this.light.LOW){
            return this.light.redZero();
         }
-        if(this.prevLuminosity === this.light.VERYLOW){
+        else if(this.prevLuminosity === this.light.VERYLOW){
            return this.light.redZero();
         }
     }
 }
 
 export class RedLightOn implements Command {
-    light:RedLight;
+    light:Light;
     prevLuminosity:number;
-    constructor(light:RedLight) {
+    isLightOn:boolean;
+    constructor(light:Light) {
         this.light = light;
         this.prevLuminosity=light.getLuminosity();
+        this.isLightOn=light.getLightOnStatus()
     }
     execute():string{
-        return this.light.redOne();
-      
+        if(this.isLightOn){
+            return this.light.redOne();
+        }else{
+            return this.light.off();
+        }
     }
 }
 
