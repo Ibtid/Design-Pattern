@@ -1,12 +1,46 @@
 <script>
+  import { controlLight } from './command-provider';
   let commands = {
-    on: "on",
-    red1: "red/1",
+    on: 'on',
+    red0: 'red/0',
+    red1: 'red/1',
+    red2: 'red/2',
+    red3: 'red/3',
+    off: 'off',
   };
 
-  let src = `./images/light-receiver/${commands["on"]}.png`;
-
+  let light = 'off';
+  $: src = `./images/light-receiver/${commands[light]}.png`;
+  function on() {
+    light = controlLight('on');
+  }
+  function off() {
+    light = controlLight('off');
+  }
+  function increaseLum() {
+    light = controlLight('increaseLum');
+  }
+  function decreaseLum() {
+    light = controlLight('decreaseLum');
+  }
+  function redLight() {
+    light = controlLight('decreaseLum');
+  }
 </script>
+
+<h1>Command buttons</h1>
+
+<div class="btn-group">
+  <button class="on" on:click={on}>On</button>
+  <button class="off" on:click={off}>Off</button>
+
+  <button class="increase-lum" on:click={increaseLum}>+</button>
+  <button class="decrease-lum" on:click={decreaseLum}>-</button>
+
+  <button class="red-light" on:click={redLight}>Red</button>
+</div>
+
+<div class="portrait"><img {src} alt={src} /></div>
 
 <style>
   .btn-group button {
@@ -50,19 +84,4 @@
     height: 300px;
     width: 500px;
   }
-
 </style>
-
-<h1>Command buttons</h1>
-
-<div class="btn-group">
-  <button class="on">On</button>
-  <button class="off">Off</button>
-
-  <button class="increase-lum">+</button>
-  <button class="decrease-lum">-</button>
-
-  <button class="red-light">Red</button>
-</div>
-
-<div class="portrait"><img {src} alt={src} /></div>
