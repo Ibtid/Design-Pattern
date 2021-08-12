@@ -11,33 +11,45 @@
 
   let light = 'off';
   $: src = `./images/light-receiver/${commands[light]}.png`;
-  function on() {
-    light = controlLight('on');
-  }
-  function off() {
-    light = controlLight('off');
-  }
-  function increaseLum() {
-    light = controlLight('increaseLum');
-  }
-  function decreaseLum() {
-    light = controlLight('decreaseLum');
-  }
-  function redLight() {
-    light = controlLight('decreaseLum');
+  function remoteClicked(a) {
+    light = controlLight(a);
+    console.log(a);
   }
 </script>
 
 <h1>Command buttons</h1>
 
 <div class="btn-group">
-  <button class="on" on:click={on}>On</button>
-  <button class="off" on:click={off}>Off</button>
-
-  <button class="increase-lum" on:click={increaseLum}>+</button>
-  <button class="decrease-lum" on:click={decreaseLum}>-</button>
-
-  <button class="red-light" on:click={redLight}>Red</button>
+  <button
+    class="on"
+    on:click={() => {
+      remoteClicked('on');
+    }}>On</button
+  >
+  <button
+    class="off"
+    on:click={() => {
+      remoteClicked('off');
+    }}>Off</button
+  >
+  <button
+    class="increase-lum"
+    on:click={() => {
+      remoteClicked('increaseLum');
+    }}>+</button
+  >
+  <button
+    class="decrease-lum"
+    on:click={() => {
+      remoteClicked('decreaseLum');
+    }}>-</button
+  >
+  <button
+    class="red-light"
+    on:click={() => {
+      remoteClicked('redLight');
+    }}>Red</button
+  >
 </div>
 
 <div class="portrait"><img {src} alt={src} /></div>

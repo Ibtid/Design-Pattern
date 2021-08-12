@@ -8,6 +8,26 @@ export class Light {
     }
 }
 
+export class LightOnCommand implements Command {
+    light:Light;
+    constructor(light:Light) {
+        this.light = light;
+    }
+    execute():string{
+        return this.light.on()
+    }
+}
+
+export class LightOffCommand implements Command {
+    light:Light;
+    constructor(light:Light) {
+        this.light = light;
+    }
+    execute():string{
+        return this.light.off()
+    }
+}
+
 export class RedLight {
     public HIGH:number = 3;
     public MEDIUM:number = 2;
@@ -45,36 +65,15 @@ export interface Command {
     execute():string
 }
 
-export class LightOnCommand implements Command {
-    light:Light;
-    constructor(light:Light) {
-        this.light = light;
-    }
-    execute():string{
-        return this.light.on()
-    }
-}
-
-export class LightOffCommand implements Command {
-    light:Light;
-    constructor(light:Light) {
-        this.light = light;
-    }
-    execute():string{
-        return this.light.off()
-    }
-}
-
 export class RedLightIncrease implements Command {
     light:RedLight;
     prevLuminosity:number;
     constructor(light:RedLight) {
         this.light = light;
-        this.prevLuminosity=this.light.getLuminosity();
+        this.prevLuminosity=light.getLuminosity();
     }
     execute():string{
         console.log(this.prevLuminosity)
-        console.log(this.light.HIGH)
         if(this.prevLuminosity === this.light.HIGH){
            return this.light.redThree()
         }
@@ -95,12 +94,10 @@ export class RedLightDecrease implements Command {
     prevLuminosity:number;
     constructor(light:RedLight) {
         this.light = light;
-        this.prevLuminosity=this.light.getLuminosity();
+        this.prevLuminosity=light.getLuminosity();
     }
     execute():string{
         
-        console.log(this.prevLuminosity)
-        console.log(this.light.HIGH)
 
         if(this.prevLuminosity === this.light.HIGH){
            return this.light.redTwo()
@@ -114,6 +111,19 @@ export class RedLightDecrease implements Command {
         if(this.prevLuminosity === this.light.VERYLOW){
            return this.light.redZero();
         }
+    }
+}
+
+export class RedLightOn implements Command {
+    light:RedLight;
+    prevLuminosity:number;
+    constructor(light:RedLight) {
+        this.light = light;
+        this.prevLuminosity=light.getLuminosity();
+    }
+    execute():string{
+        return this.light.redOne();
+      
     }
 }
 
