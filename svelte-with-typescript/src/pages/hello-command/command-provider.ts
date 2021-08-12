@@ -23,6 +23,7 @@ lightOnCommand = new LightOnCommand(light);
 lightOffCommand = new LightOffCommand(light);
 
 redLight = new RedLight();
+let redLightOn = false;
 
 export function controlLight(bulb: string){
     if(bulb === 'on'){
@@ -30,15 +31,17 @@ export function controlLight(bulb: string){
     }
     if(bulb === 'off'){
         remote.setCommand(lightOffCommand);
+        redLightOn = false;
     }
-    if(bulb === 'increaseLum'){
+    if(bulb === 'increaseLum' && redLightOn){
         remote.setCommand(new RedLightIncrease(redLight));
     }
-    if(bulb === 'decreaseLum'){
+    if(bulb === 'decreaseLum' && redLightOn){
         remote.setCommand(new RedLightDecrease(redLight));
     }
     if(bulb === 'redLight'){
         remote.setCommand(new RedLightOn(redLight));
+        redLightOn=true
     }
     return remote.buttonWasPressed()
 }
