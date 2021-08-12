@@ -18,6 +18,7 @@ export class Light {
 
     public on(){
         this.isLightOn = true;
+        this.isRedLightOn = false;
         return "on";
     }
     public off(){
