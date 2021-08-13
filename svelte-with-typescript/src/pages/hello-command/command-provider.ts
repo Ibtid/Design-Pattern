@@ -2,18 +2,18 @@ import {
     Light,
     LightOnCommand,
     LightOffCommand, 
-    RedLightIncrease, 
-    RedLightDecrease, 
+    RedLightIncreaseCommand, 
+    RedLightDecreaseCommand,  
     RemoteControl,
-    RedLightOn,
+    RedLightOnCommand,
 } from  '../../patterns/command/command-remote'
 
-let remote
-let light
 
 
-remote = new RemoteControl();
-light = new Light();
+
+let remote = new RemoteControl();
+let light = new Light();
+
 
 export function controlLight(bulb: string){
     if(bulb === 'on'){
@@ -23,13 +23,13 @@ export function controlLight(bulb: string){
         remote.setCommand(new LightOffCommand(light));
     }
     if(bulb === 'increaseLum'){
-        remote.setCommand(new RedLightIncrease(light));
+        remote.setCommand(new RedLightIncreaseCommand(light));
     }
     if(bulb === 'decreaseLum'){
-        remote.setCommand(new RedLightDecrease(light));
+        remote.setCommand(new RedLightDecreaseCommand(light));
     }
     if(bulb === 'redLight'){
-        remote.setCommand(new RedLightOn(light));
+        remote.setCommand(new RedLightOnCommand(light));
     }
     return remote.buttonWasPressed()
 }

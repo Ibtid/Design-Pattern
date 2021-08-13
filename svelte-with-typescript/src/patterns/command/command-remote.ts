@@ -4,8 +4,6 @@ export class Light {
     public MEDIUM:number = 2;
     public LOW:number = 1;
     public VERYLOW:number = 0;
-
-
     isRedLightOn:boolean;
     isLightOn:boolean;
     luminosity:number;
@@ -79,7 +77,7 @@ export interface Command {
     execute():string
 }
 
-export class RedLightIncrease implements Command {
+export class RedLightIncreaseCommand implements Command {
     light:Light;
     prevLuminosity:number;
     isRedLightOn:boolean;
@@ -106,13 +104,13 @@ export class RedLightIncrease implements Command {
         else if(this.prevLuminosity === this.light.LOW){
            return this.light.redTwo();
         }
-        else if(this.prevLuminosity === this.light.VERYLOW){
+        else {
            return this.light.redOne();
         }
     }
 }
 
-export class RedLightDecrease implements Command {
+export class RedLightDecreaseCommand implements Command {
     light:Light;
     prevLuminosity:number;
     isRedLightOn:boolean;
@@ -139,13 +137,13 @@ export class RedLightDecrease implements Command {
         else if(this.prevLuminosity === this.light.LOW){
            return this.light.redZero();
         }
-        else if(this.prevLuminosity === this.light.VERYLOW){
+        else {
            return this.light.redZero();
         }
     }
 }
 
-export class RedLightOn implements Command {
+export class RedLightOnCommand implements Command {
     light:Light;
     prevLuminosity:number;
     isLightOn:boolean;
@@ -164,7 +162,7 @@ export class RedLightOn implements Command {
 }
 
 export class RemoteControl{
-    command:Command
+    command!:Command
 
     setCommand(command:Command){
         this.command = command
