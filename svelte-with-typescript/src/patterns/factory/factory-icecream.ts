@@ -3,6 +3,8 @@
 // concrete products are implemented from product
 
 // product interface
+
+//product
 export interface Icecream {
   get(): string; // return the flavor of icecream
 }
@@ -24,7 +26,7 @@ class StrawberryIcecream implements Icecream {
   }
 }
 
-// abstract factory
+// creator
 export abstract class IcecreamFactory {
   public abstract factoryMethod(): Icecream;
   public getIcecream() {

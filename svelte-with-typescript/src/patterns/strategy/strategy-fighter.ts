@@ -1,3 +1,5 @@
+//context
+
 export class Fighter {
   private name: string;
   kickBehavior: KickBehavior;
@@ -32,6 +34,7 @@ export class Fighter {
   }
 }
 
+//strategy
 interface KickBehavior {
   kick(): void;
 }
@@ -65,7 +68,7 @@ export class Fighter1 extends Fighter {
 
 export class Fighter2 extends Fighter {
   constructor(name: string, kickBehavior: KickBehavior) {
-    super(name, kickBehavior);
+    super(name, new NoKick());
   }
 }
 
@@ -75,8 +78,8 @@ export class Fighter3 extends Fighter {
   }
 }
 
-/*
-// runtime
+
+
 let mustapha: Fighter = new Fighter1("Mustapha");
 console.log(mustapha.kick());
 
@@ -85,4 +88,4 @@ console.log(hannah.kick());
 
 let jack: Fighter = new Fighter2("Jack", new NoKick());
 console.log(jack.kick());
-*/
+

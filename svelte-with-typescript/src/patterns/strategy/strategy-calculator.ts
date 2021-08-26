@@ -40,13 +40,14 @@ export class Multiplication implements Calculator {
   }
 }
 
-/*
+
 // runtime
 
 const context = new Context(new Addition());
 console.log(context.performOperation());
 
+
 context.setStrategy(new Subtraction());
 console.log(context.performOperation());
 
-*/
+

@@ -52,6 +52,10 @@ export class Light {
     }
 }
 
+export interface Command {
+    execute():string
+}
+
 export class LightOnCommand implements Command {
     light:Light;
     constructor(light:Light) {
@@ -70,11 +74,6 @@ export class LightOffCommand implements Command {
     execute():string{
         return this.light.off()
     }
-}
-
-
-export interface Command {
-    execute():string
 }
 
 export class RedLightIncreaseCommand implements Command {
@@ -145,11 +144,9 @@ export class RedLightDecreaseCommand implements Command {
 
 export class RedLightOnCommand implements Command {
     light:Light;
-    prevLuminosity:number;
     isLightOn:boolean;
     constructor(light:Light) {
         this.light = light;
-        this.prevLuminosity=light.getLuminosity();
         this.isLightOn=light.getLightOnStatus()
     }
     execute():string{
